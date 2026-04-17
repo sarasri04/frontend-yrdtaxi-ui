@@ -1,29 +1,44 @@
 import React, { useState } from "react";
+import "../../styles/pages.css";
 
-function Profile(){
+function Profile() {
 
-const [user,setUser] = useState({
-name:"John Doe",
-email:"john@gmail.com",
-mobile:"9876543210"
-});
+  const [user] = useState({
+    name: "John Doe",
+    email: "john@gmail.com",
+    mobile: "9876543210"
+  });
 
-return(
+  return (
+    <div className="profile-page">
 
-<div style={{padding:"40px"}}>
+      <div className="profile-card">
 
-<h2>My Profile</h2>
+        <div className="profile-avatar">👤</div>
 
-<p>Name: {user.name}</p>
-<p>Email: {user.email}</p>
-<p>Mobile: {user.mobile}</p>
+        <h2>My Profile</h2>
 
-<button>Edit Profile</button>
+        <div className="profile-field">
+          <span className="profile-label">Name</span>
+          <span className="profile-value">{user.name}</span>
+        </div>
 
-</div>
+        <div className="profile-field">
+          <span className="profile-label">Email</span>
+          <span className="profile-value">{user.email}</span>
+        </div>
 
-)
+        <div className="profile-field">
+          <span className="profile-label">Mobile</span>
+          <span className="profile-value">{user.mobile}</span>
+        </div>
 
+        <button className="edit-btn">Edit Profile</button>
+
+      </div>
+
+    </div>
+  );
 }
 
 export default Profile;

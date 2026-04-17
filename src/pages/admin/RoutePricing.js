@@ -1,19 +1,20 @@
 import React from "react";
+import "../../styles/pages.css";
 
-function RoutePricing(){
+function RoutePricing() {
+  return (
+    <div className="admin-page">
 
-return(
+      <h2>Route Pricing</h2>
 
-<div>
+      <div className="placeholder-card">
+        <div className="placeholder-icon">🗺️</div>
+        <h3>Route Price Configuration</h3>
+        <p>Set custom price per KM for specific routes here.</p>
+      </div>
 
-<h2>Route Pricing</h2>
-
-<p>Set price per KM for routes.</p>
-
-</div>
-
-)
-
+    </div>
+  );
 }
 
 export default RoutePricing;

@@ -1,22 +1,24 @@
 import React from "react";
-
 import HeroSection from "../components/HeroSection";
 import BookingSection from "../components/BookingSection";
-import LiveDriverMap from "../components/LiveDriverMap";
+import Features from "../components/Features";
+import Tariffs from "../components/Tariffs";
 
 function Home() {
   return (
     <div id="home">
 
+      {/* 1. Hero — big banner with stats */}
       <HeroSection />
 
+      {/* 2. Book Your Taxi — form + trust panel */}
       <BookingSection />
 
-      <h2 style={{ textAlign: "center", marginTop: "40px" }}>
-        Available Drivers Near You
-      </h2>
+      {/* 3. Why Choose Us — 6 feature cards */}
+      <Features />
 
-      <LiveDriverMap />
+      {/* 4. Our Fleet & Tariffs */}
+      <Tariffs />
 
     </div>
   );

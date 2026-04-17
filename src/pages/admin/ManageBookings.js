@@ -1,19 +1,20 @@
 import React from "react";
+import "../../styles/pages.css";
 
-function ManageDrivers(){
+function ManageBookings() {
+  return (
+    <div className="admin-page">
 
-return(
+      <h2>Manage Bookings</h2>
 
-<div>
+      <div className="placeholder-card">
+        <div className="placeholder-icon">📋</div>
+        <h3>Booking Management</h3>
+        <p>Booking list will appear here once connected to the backend.</p>
+      </div>
 
-<h2>Manage Drivers</h2>
-
-<p>Driver list will appear here.</p>
-
-</div>
-
-)
-
+    </div>
+  );
 }
 
-export default ManageDrivers;
+export default ManageBookings;

@@ -1,51 +1,60 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "../../styles/auth.css";
 
-function OtpLogin(){
+function OtpLogin() {
 
-const [mobile,setMobile] = useState("");
-const [otp,setOtp] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [otp, setOtp] = useState("");
 
-async function sendOtp(){
+  async function sendOtp() {
+    await axios.post("http://localhost:8080/api/auth/send-otp", { mobile });
+    alert("OTP Sent");
+  }
 
-await axios.post("http://localhost:8080/api/auth/send-otp",{mobile});
+  async function verifyOtp() {
+    await axios.post("http://localhost:8080/api/auth/verify-otp", { mobile, otp });
+    alert("Login Successful");
+  }
 
-alert("OTP Sent");
+  return (
+    <div className="auth-container">
+      <div className="auth-card">
 
-}
+        <div className="auth-logo">📱</div>
+        <h2>OTP Login</h2>
+        <p className="auth-subtitle">Login with your mobile number</p>
 
-async function verifyOtp(){
+        <div className="form-group">
+          <label>Mobile Number</label>
+          <div className="otp-row">
+            <input
+              className="form-input"
+              placeholder="Enter mobile number"
+              onChange={(e) => setMobile(e.target.value)}
+            />
+            <button className="send-otp-btn" onClick={sendOtp}>
+              Send OTP
+            </button>
+          </div>
+        </div>
 
-await axios.post("http://localhost:8080/api/auth/verify-otp",{mobile,otp});
+        <div className="form-group">
+          <label>OTP</label>
+          <input
+            className="form-input"
+            placeholder="Enter 6-digit OTP"
+            onChange={(e) => setOtp(e.target.value)}
+          />
+        </div>
 
-alert("Login Successful");
+        <button className="auth-btn" onClick={verifyOtp}>
+          Verify & Login
+        </button>
 
-}
-
-return(
-
-<div style={{padding:"40px"}}>
-
-<h2>OTP Login</h2>
-
-<input
-placeholder="Mobile Number"
-onChange={(e)=>setMobile(e.target.value)}
-/>
-
-<button onClick={sendOtp}>Send OTP</button>
-
-<input
-placeholder="Enter OTP"
-onChange={(e)=>setOtp(e.target.value)}
-/>
-
-<button onClick={verifyOtp}>Verify OTP</button>
-
-</div>
-
-)
-
+      </div>
+    </div>
+  );
 }
 
 export default OtpLogin;

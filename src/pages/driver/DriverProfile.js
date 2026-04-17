@@ -1,21 +1,30 @@
 import React from "react";
+import "../../styles/pages.css";
 
-function DriverProfile(){
+function DriverProfile() {
+  return (
+    <div className="driver-page">
 
-return(
+      <h2>Driver Profile</h2>
 
-<div>
+      <div className="driver-profile-card">
 
-<h2>Driver Profile</h2>
+        <div className="driver-avatar">🚘</div>
 
-<p>Name: Driver Name</p>
+        <div className="driver-detail-row">
+          <span className="driver-label">Name</span>
+          <span className="driver-value">Driver Name</span>
+        </div>
 
-<p>Car Number: TN45AB1234</p>
+        <div className="driver-detail-row">
+          <span className="driver-label">Car Number</span>
+          <span className="driver-value">TN45AB1234</span>
+        </div>
 
-</div>
+      </div>
 
-)
-
+    </div>
+  );
 }
 
 export default DriverProfile;

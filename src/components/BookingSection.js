@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import "../styles/booking.css";
-
 import taxiImg from "../assets/images/taxi.png";
 
 function BookingSection() {
@@ -29,38 +27,29 @@ function BookingSection() {
     INNOVA: 20
   };
 
-  // Handle input
   function handleChange(e) {
     setBooking({ ...booking, [e.target.name]: e.target.value });
   }
 
-  // Select car
   function selectCar(type) {
     setBooking({ ...booking, carType: type });
   }
 
-  // Auto fare calculation
   useEffect(() => {
     if (booking.distance > 0) {
       let dist = booking.distance;
-
-      if (tripType === "ROUND") {
-        dist = dist * 2;
-      }
-
+      if (tripType === "ROUND") dist = dist * 2;
       const fare = dist * pricePerKm[booking.carType];
-
       setBooking(prev => ({ ...prev, estimatedFare: fare }));
     }
-  }, [booking.distance, booking.carType, tripType]);
+  }, [booking.distance, booking.carType, tripType]); // eslint-disable-line
 
   return (
-    <div className="main-container">
+    <section id="book" className="main-container">
 
-      {/* LEFT PANEL */}
+      {/* ── LEFT: Booking Form ── */}
       <div className="left-panel">
 
-        {/* Tabs */}
         <div className="tabs">
           <button
             className={tripType === "ONEWAY" ? "active-tab" : ""}
@@ -68,7 +57,6 @@ function BookingSection() {
           >
             One Way
           </button>
-
           <button
             className={tripType === "ROUND" ? "active-tab" : ""}
             onClick={() => setTripType("ROUND")}
@@ -77,131 +65,134 @@ function BookingSection() {
           </button>
         </div>
 
-        {/* FORM CARD */}
         <div className="form-card">
 
           <h3>Book Your Taxi</h3>
 
-          <input name="pickupLocation" placeholder="Pickup Location" onChange={handleChange}/>
-          <input name="dropLocation" placeholder="Drop Location" onChange={handleChange}/>
-
-          <div className="row">
-            <input name="fullname" placeholder="Full Name" onChange={handleChange}/>
-            <input name="mobile" placeholder="Mobile Number" onChange={handleChange}/>
+          <div className="form-field">
+            <label>Pickup Location</label>
+            <input name="pickupLocation" placeholder="Enter pickup city or address" onChange={handleChange} />
           </div>
 
-          <input name="email" placeholder="Email" onChange={handleChange}/>
-
-          <div className="row">
-            <input type="date" name="pickupDate" onChange={handleChange}/>
-            <input type="time" name="pickupTime" onChange={handleChange}/>
+          <div className="form-field">
+            <label>Drop Location</label>
+            <input name="dropLocation" placeholder="Enter drop city or address" onChange={handleChange} />
           </div>
 
-          <input
-            type="number"
-            placeholder="Distance (km)"
-            onChange={(e) =>
-              setBooking({
-                ...booking,
-                distance: Math.max(parseFloat(e.target.value) || 0, 0)
-              })
-            }
-          />
-
-          {/* Cars */}
-          <div className="cars">
-            {["SEDAN", "ETIOS", "SUV", "INNOVA"].map(car => (
-              <div
-                key={car}
-                className={booking.carType === car ? "car active-car" : "car"}
-                onClick={() => selectCar(car)}
-              >
-                🚗 {car}
-              </div>
-            ))}
+          <div className="form-row">
+            <div className="form-field">
+              <label>Full Name</label>
+              <input name="fullname" placeholder="Your name" onChange={handleChange} />
+            </div>
+            <div className="form-field">
+              <label>Mobile</label>
+              <input name="mobile" placeholder="10-digit number" onChange={handleChange} />
+            </div>
           </div>
 
-          {/* Fare */}
+          <div className="form-field">
+            <label>Email</label>
+            <input name="email" type="email" placeholder="your@email.com" onChange={handleChange} />
+          </div>
+
+          <div className="form-row">
+            <div className="form-field">
+              <label>Pickup Date</label>
+              <input type="date" name="pickupDate" onChange={handleChange} />
+            </div>
+            <div className="form-field">
+              <label>Pickup Time</label>
+              <input type="time" name="pickupTime" onChange={handleChange} />
+            </div>
+          </div>
+
+          <div className="form-field">
+            <label>Distance (km)</label>
+            <input
+              type="number"
+              placeholder="Approximate distance"
+              onChange={(e) =>
+                setBooking({ ...booking, distance: Math.max(parseFloat(e.target.value) || 0, 0) })
+              }
+            />
+          </div>
+
+          <div>
+            <label style={{ fontSize: "11px", fontWeight: 600, color: "rgba(255,255,255,0.65)", textTransform: "uppercase", letterSpacing: "0.6px", display: "block", marginBottom: "8px" }}>
+              Select Car Type
+            </label>
+            <div className="cars">
+              {["SEDAN", "ETIOS", "SUV", "INNOVA"].map(car => (
+                <div
+                  key={car}
+                  className={booking.carType === car ? "car active-car" : "car"}
+                  onClick={() => selectCar(car)}
+                >
+                  🚗<br />{car}
+                </div>
+              ))}
+            </div>
+          </div>
+
           {booking.estimatedFare > 0 && (
-            <div className="fare">₹ {booking.estimatedFare}</div>
+            <div className="fare">Estimated Fare: ₹ {booking.estimatedFare}</div>
           )}
 
-          {/* ✅ FIXED BUTTON */}
-          <button
-            type="button"
-            className="book-btn"
-            onClick={() => setShowSummary(true)}
-          >
+          <button type="button" className="book-btn" onClick={() => setShowSummary(true)}>
             Get Estimation
           </button>
 
         </div>
 
-        {/* ✅ SUMMARY (CORRECT PLACE) */}
         {showSummary && (
           <div className="summary-container">
-
-            {/* BOOKING SUMMARY */}
             <div className="summary-box">
-              <h3>BOOKING SUMMARY</h3>
-
-              <p><b>Book Type:</b> {tripType}</p>
-              <p><b>Car Type:</b> {booking.carType}</p>
-              <p><b>Pickup:</b> {booking.pickupLocation}</p>
-              <p><b>Drop:</b> {booking.dropLocation}</p>
-              <p><b>Booked At:</b> {booking.pickupDate} {booking.pickupTime}</p>
+              <h3>Booking Summary</h3>
+              <p><b>Trip Type</b><span>{tripType}</span></p>
+              <p><b>Car Type</b><span>{booking.carType}</span></p>
+              <p><b>Pickup</b><span>{booking.pickupLocation}</span></p>
+              <p><b>Drop</b><span>{booking.dropLocation}</span></p>
+              <p><b>Date & Time</b><span>{booking.pickupDate} {booking.pickupTime}</span></p>
             </div>
-
-            {/* PAYMENT DETAILS */}
             <div className="payment-box">
-              <h3>PAYMENT DETAILS</h3>
-
-              <p>Base Fare: ₹ {booking.estimatedFare}</p>
-              <p>Driver Bata: ₹ 300</p>
-
+              <h3>Payment Details</h3>
+              <p><b>Base Fare</b><span>₹ {booking.estimatedFare}</span></p>
+              <p><b>Driver Bata</b><span>₹ 300</span></p>
               <h4>Total: ₹ {booking.estimatedFare + 300}</h4>
-
-              <div className="note">
-                THE ACTUAL BILL AMOUNT MAY DIFFER BASED ON DISTANCE.
-              </div>
-
-              <button className="confirm-btn">
-                Confirm Booking
-              </button>
+              <div className="note">Actual bill may differ based on final distance.</div>
+              <button className="confirm-btn">Confirm Booking</button>
             </div>
-
           </div>
         )}
 
       </div>
 
-      {/* RIGHT PANEL */}
-       <div className="right-panel">
+      {/* ── RIGHT: Trust Panel ── */}
+      <div className="right-panel">
+        <div className="right-content">
 
-  <div className="right-content">
+          <h2>Ride with <span>YRD TAXI</span></h2>
+          <p className="tagline">
+            Trusted by thousands of passengers across Tamil Nadu for safe, on-time rides.
+          </p>
 
-    <h2>
-      Ride with <span>YRD TAXI</span>
-    </h2>
+          <div className="trust-list">
+            <div className="trust-item">✅ Transparent pricing — no hidden charges</div>
+            <div className="trust-item">📍 GPS-tracked rides for your safety</div>
+            <div className="trust-item">👨‍✈️ Background-verified, trained drivers</div>
+            <div className="trust-item">🚗 Sedan, SUV &amp; Innova options</div>
+            <div className="trust-item">📞 24/7 customer support</div>
+            <div className="trust-item">🔄 One Way &amp; Round Trip available</div>
+          </div>
 
-    <p className="tagline">
-      Book your taxi quickly and safely with YRD TAXI service.
-    </p>
+          <div className="image-box">
+            <img src={taxiImg} alt="YRD Taxi" className="taxi-img" />
+          </div>
 
-    <button className="contact-btn">
-      Contact Us
-    </button>
+        </div>
+      </div>
 
-    {/* ✅ IMAGE HERE */}
-    <div className="image-box">
-      <img src={taxiImg} alt="taxi" className="taxi-img" />
-    </div>
-
-  </div>
-
-</div>
-
-    </div>
+    </section>
   );
 }
 

@@ -1,53 +1,90 @@
 import React, { useState } from "react";
 import { register } from "../../services/AuthService";
 import { useNavigate } from "react-router-dom";
+import "../../styles/auth.css";
 
-function Register(){
+function Register() {
 
-const [data,setData] = useState({
-fullname:"",
-email:"",
-mobile:"",
-password:""
-});
+  const [data, setData] = useState({
+    fullname: "",
+    email: "",
+    mobile: "",
+    password: ""
+  });
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-function handleChange(e){
-setData({...data,[e.target.name]:e.target.value});
-}
+  function handleChange(e) {
+    setData({ ...data, [e.target.name]: e.target.value });
+  }
 
-async function handleRegister(){
+  async function handleRegister() {
+    try {
+      await register(data);
+      alert("Registered Successfully");
+      navigate("/login");
+    } catch (err) {
+      alert("Error in Register");
+    }
+  }
 
-try{
-await register(data);
-alert("Registered Successfully");
-navigate("/login");
-}catch(err){
-alert("Error in Register");
-}
+  return (
+    <div className="auth-container">
+      <div className="auth-card">
 
-}
+        <div className="auth-logo">🚖</div>
+        <h2>Create Account</h2>
+        <p className="auth-subtitle">Join YRD Taxi today</p>
 
-return(
+        <div className="form-group">
+          <label>Full Name</label>
+          <input
+            className="form-input"
+            name="fullname"
+            placeholder="Enter your full name"
+            onChange={handleChange}
+          />
+        </div>
 
-<div style={{padding:"40px"}}>
+        <div className="form-group">
+          <label>Email</label>
+          <input
+            className="form-input"
+            name="email"
+            type="email"
+            placeholder="Enter your email"
+            onChange={handleChange}
+          />
+        </div>
 
-<h2>Register</h2>
+        <div className="form-group">
+          <label>Mobile</label>
+          <input
+            className="form-input"
+            name="mobile"
+            placeholder="Enter your mobile number"
+            onChange={handleChange}
+          />
+        </div>
 
-<input name="fullname" placeholder="Full Name" onChange={handleChange}/>
-<input name="email" placeholder="Email" onChange={handleChange}/>
-<input name="mobile" placeholder="Mobile" onChange={handleChange}/>
-<input type="password" name="password" placeholder="Password" onChange={handleChange}/>
+        <div className="form-group">
+          <label>Password</label>
+          <input
+            className="form-input"
+            type="password"
+            name="password"
+            placeholder="Create a password"
+            onChange={handleChange}
+          />
+        </div>
 
-<button onClick={handleRegister}>
-Register
-</button>
+        <button className="auth-btn" onClick={handleRegister}>
+          Create Account
+        </button>
 
-</div>
-
-)
-
+      </div>
+    </div>
+  );
 }
 
 export default Register;

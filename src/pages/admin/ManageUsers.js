@@ -1,19 +1,20 @@
 import React from "react";
+import "../../styles/pages.css";
 
-function ManageUsers(){
+function ManageUsers() {
+  return (
+    <div className="admin-page">
 
-return(
+      <h2>Manage Users</h2>
 
-<div>
+      <div className="placeholder-card">
+        <div className="placeholder-icon">👥</div>
+        <h3>User Management</h3>
+        <p>User list will appear here once connected to the backend.</p>
+      </div>
 
-<h2>Manage Users</h2>
-
-<p>User list will appear here.</p>
-
-</div>
-
-)
-
+    </div>
+  );
 }
 
 export default ManageUsers;

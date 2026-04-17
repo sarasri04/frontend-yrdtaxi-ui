@@ -1,54 +1,48 @@
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "../../styles/pages.css";
 
-function DriverTrips(){
+function DriverTrips() {
 
-const [trips,setTrips] = useState([]);
+  const [trips, setTrips] = useState([]);
 
-useEffect(()=>{
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/driver/trips")
+      .then(res => setTrips(res.data));
+  }, []);
 
-axios
-.get("http://localhost:8080/api/driver/trips")
-.then(res=>setTrips(res.data));
+  return (
+    <div className="driver-page">
 
-},[])
+      <h2>My Trips</h2>
 
-return(
+      <div className="trips-table-wrapper">
+        <table className="trips-table">
 
-<div>
+          <thead>
+            <tr>
+              <th>Pickup</th>
+              <th>Drop</th>
+              <th>Fare</th>
+            </tr>
+          </thead>
 
-<h2>My Trips</h2>
+          <tbody>
+            {trips.map((t, i) => (
+              <tr key={i}>
+                <td>{t.pickupLocation}</td>
+                <td>{t.dropLocation}</td>
+                <td>₹{t.fare}</td>
+              </tr>
+            ))}
+          </tbody>
 
-<table>
+        </table>
+      </div>
 
-<thead>
-<tr>
-<th>Pickup</th>
-<th>Drop</th>
-<th>Fare</th>
-</tr>
-</thead>
-
-<tbody>
-
-{trips.map((t,i)=>(
-
-<tr key={i}>
-<td>{t.pickupLocation}</td>
-<td>{t.dropLocation}</td>
-<td>₹{t.fare}</td>
-</tr>
-
-))}
-
-</tbody>
-
-</table>
-
-</div>
-
-)
-
+    </div>
+  );
 }
 
 export default DriverTrips;

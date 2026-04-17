@@ -1,19 +1,19 @@
 import React from "react";
+import "../../styles/pages.css";
 
-function DriverEarnings(){
+function DriverEarnings() {
+  return (
+    <div className="driver-page">
 
-return(
+      <h2>Driver Earnings</h2>
 
-<div>
+      <div className="earnings-card">
+        <div className="earnings-label">Total Earnings</div>
+        <div className="earnings-amount">₹5,000</div>
+      </div>
 
-<h2>Driver Earnings</h2>
-
-<p>Total Earnings: ₹5000</p>
-
-</div>
-
-)
-
+    </div>
+  );
 }
 
 export default DriverEarnings;

@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../styles/pages.css";
 
 function CalculatePage() {
 
@@ -9,32 +10,25 @@ function CalculatePage() {
 
   const booking = location.state;
 
-  // ✅ Safety check
   if (!booking) {
-    return <h2 style={{ textAlign: "center" }}>No booking data found</h2>;
+    return (
+      <div className="calculate-page">
+        <h2>No booking data found</h2>
+      </div>
+    );
   }
 
-  // ✅ Format date-time (important for backend)
   const dateTime = booking.pickupDate + "T" + booking.pickupTime;
 
   const confirmBooking = async () => {
     try {
-
       const finalBooking = {
         ...booking,
         pickupTime: dateTime
       };
-
-      await axios.post(
-        "http://localhost:8080/api/bookings",
-        finalBooking
-      );
-
+      await axios.post("http://localhost:8080/api/bookings", finalBooking);
       alert("Booking Confirmed 🚖");
-
-      // 👉 redirect to home after booking
       navigate("/");
-
     } catch (error) {
       console.error(error);
       alert("Booking Failed ❌");
@@ -42,45 +36,44 @@ function CalculatePage() {
   };
 
   return (
-
-    <div style={{
-      padding: "30px",
-      maxWidth: "600px",
-      margin: "auto",
-      textAlign: "center"
-    }}>
+    <div className="calculate-page">
 
       <h2>Fare Summary</h2>
 
-      <div style={{
-        background: "#f5f5f5",
-        padding: "20px",
-        borderRadius: "10px"
-      }}>
+      <div className="fare-summary-card">
 
-        <p><b>Pickup:</b> {booking.pickupLocation}</p>
-        <p><b>Drop:</b> {booking.dropLocation}</p>
-        <p><b>Distance:</b> {booking.distance.toFixed(2)} km</p>
-        <p><b>Car Type:</b> {booking.carType}</p>
-        <p><b>Trip Type:</b> {booking.tripType}</p>
+        <div className="fare-detail-row">
+          <span>Pickup</span>
+          <span>{booking.pickupLocation}</span>
+        </div>
 
-        <h3>💰 Fare: ₹{booking.estimatedFare}</h3>
+        <div className="fare-detail-row">
+          <span>Drop</span>
+          <span>{booking.dropLocation}</span>
+        </div>
+
+        <div className="fare-detail-row">
+          <span>Distance</span>
+          <span>{booking.distance.toFixed(2)} km</span>
+        </div>
+
+        <div className="fare-detail-row">
+          <span>Car Type</span>
+          <span>{booking.carType}</span>
+        </div>
+
+        <div className="fare-detail-row">
+          <span>Trip Type</span>
+          <span>{booking.tripType}</span>
+        </div>
+
+        <div className="fare-total">
+          💰 ₹{booking.estimatedFare}
+        </div>
 
       </div>
 
-      <br />
-
-      <button
-        onClick={confirmBooking}
-        style={{
-          padding: "12px 25px",
-          background: "#ff6600",
-          color: "#fff",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer"
-        }}
-      >
+      <button className="confirm-booking-btn" onClick={confirmBooking}>
         Confirm Booking
       </button>
 

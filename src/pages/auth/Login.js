@@ -1,59 +1,64 @@
 import React, { useState } from "react";
 import { login } from "../../services/AuthService";
 import { useNavigate } from "react-router-dom";
+import "../../styles/auth.css";
 
 function Login() {
 
-const [data,setData] = useState({
-email:"",
-password:""
-});
+  const [data, setData] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
-const navigate = useNavigate();
+  function handleChange(e) {
+    setData({ ...data, [e.target.name]: e.target.value });
+  }
 
-function handleChange(e){
-setData({...data,[e.target.name]:e.target.value});
-}
+  async function handleLogin() {
+    try {
+      await login(data);
+      alert("Login Success");
+      navigate("/");
+    } catch (err) {
+      alert("Login Failed");
+    }
+  }
 
-async function handleLogin(){
+  return (
+    <div className="auth-container">
+      <div className="auth-card">
 
-try{
-await login(data);
-alert("Login Success");
-navigate("/");
-}catch(err){
-alert("Login Failed");
-}
+        <div className="auth-logo">🚖</div>
+        <h2>Welcome Back</h2>
+        <p className="auth-subtitle">Sign in to your YRD Taxi account</p>
 
-}
+        <div className="form-group">
+          <label>Email</label>
+          <input
+            className="form-input"
+            name="email"
+            type="email"
+            placeholder="Enter your email"
+            onChange={handleChange}
+          />
+        </div>
 
-return(
+        <div className="form-group">
+          <label>Password</label>
+          <input
+            className="form-input"
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+            onChange={handleChange}
+          />
+        </div>
 
-<div style={{padding:"40px"}}>
+        <button className="auth-btn" onClick={handleLogin}>
+          Login
+        </button>
 
-<h2>Login</h2>
-
-<input
-name="email"
-placeholder="Email"
-onChange={handleChange}
-/>
-
-<input
-type="password"
-name="password"
-placeholder="Password"
-onChange={handleChange}
-/>
-
-<button onClick={handleLogin}>
-Login
-</button>
-
-</div>
-
-)
-
+      </div>
+    </div>
+  );
 }
 
 export default Login;

@@ -1,0 +1,86 @@
+.header{
+width:100%;
+}
+
+/* TOP BAR */
+.topbar{
+background:#000;
+color:#fff;
+padding:8px 20px;
+display:flex;
+gap:10px;
+justify-content:center;
+font-size:14px;
+}
+
+.topbar a{
+color:#fff;
+text-decoration:none;
+}
+
+/* NAVBAR */
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 30px;
+background:#fff;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo{
+color:#ff6600;
+}
+
+/* MENU */
+.menu{
+display:flex;
+list-style:none;
+gap:20px;
+}
+
+.menu li a{
+text-decoration:none;
+color:#333;
+font-weight:500;
+}
+
+/* BUTTON */
+.ride-btn{
+background:#ff6600;
+color:#fff;
+padding:10px 15px;
+border:none;
+cursor:pointer;
+}
+
+/* MOBILE */
+.menu-toggle{
+display:none;
+font-size:22px;
+cursor:pointer;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+
+.menu{
+display:none;
+flex-direction:column;
+position:absolute;
+top:80px;
+right:20px;
+background:#fff;
+padding:20px;
+box-shadow:0 2px 5px rgba(0,0,0,0.2);
+}
+
+.menu.active{
+display:flex;
+}
+
+.menu-toggle{
+display:block;
+}
+
+}

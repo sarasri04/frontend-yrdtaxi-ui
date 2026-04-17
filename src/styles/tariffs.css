@@ -1,0 +1,46 @@
+.tariffs-section {
+  padding: 50px;
+  text-align: center;
+  background: #f5f5f5;
+}
+
+.title {
+  margin-bottom: 30px;
+}
+
+/* Grid */
+.tariff-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Card */
+.tariff-card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 220px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Image */
+.car-img {
+  width: 150px;
+}
+
+/* Button */
+.book-btn {
+  background: green;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.book-btn:hover {
+  background: darkgreen;
+}
